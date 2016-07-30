@@ -1,0 +1,1 @@
+cnpm install & node index.js
