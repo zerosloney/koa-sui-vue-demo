@@ -7,14 +7,14 @@ const router = require('koa-router')();
 const route = require('./routes/route');
 
 //静态文件&ejs模板
-app.use(require('koa-static')(__dirname+'/static'));
+app.use(require('koa-static')(__dirname + '/static'));
 app.use(bodyParser());
 render(app, {
-  root: path.join(__dirname, 'views'),
-  layout: '',
-  viewExt: 'ejs',
-  cache: false,
-  debug: true
+    root: path.join(__dirname, 'views'),
+    layout: '',
+    viewExt: 'ejs',
+    cache: false,
+    debug: true
 });
 
 //路由
@@ -22,21 +22,24 @@ route(router);
 app.use(router.routes()).use(router.allowedMethods());
 
 //错误处理
-app.use(function *(next) {
-	if(this.status !=200 ){
-    this.body='404 Not Found!';
-    //跳转404页面
-  }
+app.use(function*(next) {
+    try {
+        yield next
+    } catch (err) {
+        this.status = err.status || 500;
+        this.body = err;
+        this.app.emit('error', err, this);
+    }
 });
 
-app.on('error',function (err,ctx) {
-	if (process.env.NODE_ENV!='production') {
-		this.body='500 server error';
-		console.error(err.message);
-		console.error(err);
-	}else{
-    //跳转到错误页面
-  }
+app.on('error', function(err, ctx) {
+    if (process.env.NODE_ENV != 'production') {
+        this.body = '500 server error';
+        console.error(err.message);
+        console.error(err);
+    } else {
+        //跳转到错误页面
+    }
 });
 
 //启动

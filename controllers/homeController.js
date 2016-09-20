@@ -1,17 +1,34 @@
 var wx = require('../models/wxHotNews');
+var bl = require('../models/sztBalance');
 
 module.exports = {
     //首页
-    index:function *(next){
-      try {
-        var res = yield wx.getList(1,10);
-        var data={};
-        if(res.code == '200'){
-          data.news = JSON.stringify(res.newslist);
+    index: function*(next) {
+        try {
+            var res = yield wx.getList(1, 10);
+            var data = {};
+            if (res.code == '200') {
+                data.news = JSON.stringify(res.newslist);
+            }
+            yield this.render('search', data);
+        } catch (e) {
+            console.log(e);
         }
-        yield this.render('index',data);
-      } catch (e) {
-        console.log(e);
-      }
+    },
+    balance: function*(next) {
+        try {
+            if (this.query.no === undefined) {
+                this.body = {
+                    'error': '1',
+                    'msg': '参数错误'
+                };
+            } else {
+                var res = yield bl.getBalance(this.query.no);
+                this.body = res;
+            }
+            yield next;
+        } catch (e) {
+            console.log(e);
+        }
     }
 };
