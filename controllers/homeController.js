@@ -5,7 +5,7 @@ module.exports = {
     //首页
     index: function*(next) {
         try {
-            var res = yield wx.getList(1, 10);
+            let res = yield wx.getList(1, 10);
             var data = {};
             if (res.code == '200') {
                 data.news = JSON.stringify(res.newslist);
@@ -23,7 +23,7 @@ module.exports = {
                     'msg': '参数错误'
                 };
             } else {
-                var res = yield bl.getBalance(this.query.no);
+                let res = yield bl.getBalance(this.query.no);
                 this.body = res;
             }
             yield next;
