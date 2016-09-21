@@ -1,13 +1,13 @@
-var wx = require('../models/wxHotNews');
-var bl = require('../models/sztBalance');
+const wx = require('../models/wxHotNews');
+const bl = require('../models/sztBalance');
 
 module.exports = {
     //首页
     index: function*(next) {
         try {
             let res = yield wx.getList(1, 10);
-            var data = {};
-            if (res.code == '200') {
+            let data = {};
+            if (res.code === '200') {
                 data.news = JSON.stringify(res.newslist);
             }
             yield this.render('search', data);
@@ -24,7 +24,7 @@ module.exports = {
                 };
             } else {
                 let res = yield bl.getBalance(this.query.no);
-                this.body = res;
+                this.body = res;n
             }
             yield next;
         } catch (e) {
