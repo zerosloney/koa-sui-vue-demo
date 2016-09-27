@@ -1,0 +1,88 @@
+<% include header %>
+<div class="page"  id="wrap">
+    <header class="bar bar-nav">
+        <h1 class='title'>深圳通余额查询</h1>
+    </header>
+    <div class="bar bar-header-secondary">
+        <div class="searchbar row">
+            <div class="search-input col-85">
+                <input type="search" v-model="code" id='search' placeholder='输入关键字...'/>
+            </div>
+            <a class="button button-fill button-primary col-15" v-on:click="search">
+                <span class="icon icon-search"></span>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="content" v-show="display">
+        <div class="list-block">
+            <ul>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">卡号</div>
+                        <div class="item-after">{{entity.card_number}}</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">余额</div>
+                        <div class="item-after">{{entity.card_balance}}</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">截止时间</div>
+                        <div class="item-after">{{entity.balance_time}}</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">卡有效期</div>
+                        <div class="item-after">{{entity.card_validity}}</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">查询时间</div>
+                        <div class="item-after">{{entity.current_time}}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</page>
+<script>
+    new Vue({
+        el: '#wrap',
+        data: {
+            code: '',
+            display: false,
+            entity: {
+                card_number: '',
+                card_balance: '',
+                balance_time: '',
+                card_validity: '',
+                current_time: ''
+            }
+        },
+        methods: {
+            search: function(event) {
+                var self = this;
+                $.get('/balance', {
+                    no: self.code
+                }, function(res) {
+                    console.log(res);
+                    if (res.code !== undefined && res.code === 0) {
+                        self.display = true;
+                        self.entity = res.data;
+                        return;
+                    }
+                    self.display = false;
+                });
+            }
+        }
+    });
+</script>
+
+<% include footer %>
