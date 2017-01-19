@@ -1,0 +1,55 @@
+<% include header %>
+
+<header class="bar bar-nav">
+  <h1 class='title'>理财计划本</h1>
+</header>
+
+<div class="content" id="wrap">
+  <div class="list-block">
+    <ul>
+      <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-name"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">账号</div>
+            <div class="item-input">
+              <input type="text" placeholder="账号" v-model="username">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-password"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">密码</div>
+            <div class="item-input">
+              <input type="password" placeholder="密码" v-model="userpwd">
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="content-block">
+    <div class="row">
+      <div class="col-100"><a href="#" class="button button-big button-fill button-success" v-on:click="submit">提交</a></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    var token = '<%- token %>';
+    new Vue({
+        el: '#wrap',
+        data: { username: '', userpwd: '' },
+        methods: {
+            submit: function() {
+                console.log(token);
+            }
+        }
+    });
+</script>
+
+<% include footer %>

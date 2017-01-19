@@ -17,6 +17,7 @@ render(app, {
     debug: true
 });
 
+
 //路由
 route(router);
 app.use(router.routes()).use(router.allowedMethods());
@@ -24,7 +25,7 @@ app.use(router.routes()).use(router.allowedMethods());
 //错误处理
 app.use(function*(next) {
     try {
-        yield next
+        yield next;
     } catch (err) {
         this.status = err.status || 500;
         this.body = err;
@@ -38,6 +39,7 @@ app.on('error', function(err, ctx) {
         console.error(err.message);
         console.error(err);
     } else {
+        this.redirect("/404.html");
         //跳转到错误页面
     }
 });

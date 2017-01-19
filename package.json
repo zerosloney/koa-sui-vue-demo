@@ -1,21 +1,24 @@
 {
   "name": "sui-mobie-demo",
   "version": "1.0.0",
-  "description":"this is a demo website for sui-mobie.",
+  "description": "this is a demo website for sui-mobie.",
   "main": "index.js",
   "scripts": {
-    "start":"node index"
-   },
+    "start": "node index"
+  },
   "author": "dai chen",
   "license": "MIT",
   "dependencies": {
     "co": "^4.6.0",
+    "jsonwebtoken": "^7.2.1",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
+    "koa-ejs": "^3.0.0",
     "koa-logger": "^1.3.0",
     "koa-router": "^5.4.0",
     "koa-static": "^2.0.0",
-    "koa-ejs": "^3.0.0",
-    "node-fetch":"^1.5.3"
+    "md5": "^2.2.1",
+    "mysql": "^2.12.0",
+    "node-fetch": "^1.5.3"
   }
 }
